@@ -1,4 +1,6 @@
 bin
 obj
+*.swp
 
 # Binary and object files are ignored
+# Vim swap files are also ignored
