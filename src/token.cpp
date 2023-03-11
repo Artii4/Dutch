@@ -52,7 +52,7 @@ std::string Token::type_to_string(Token_type type) {
   }
 }
 
-std::string Token::to_string() {
+std::string Token::to_string() const {
   std::string result;
 
   result += "<type: ";
@@ -64,5 +64,9 @@ std::string Token::to_string() {
   return result;
 }
 
-Token_type Token::get_type() { return type; }
-std::string Token::get_value() { return value; }
+Token_type Token::get_type() const { return type; }
+std::string Token::get_value() const { return value; }
+
+bool Token::operator==(const Token& tok) const {
+	return type == tok.get_type() && value == tok.get_value();
+}

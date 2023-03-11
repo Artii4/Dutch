@@ -34,11 +34,13 @@ public:
   Token(Token_type, std::string value);
   Token();
 
-  Token_type get_type();
-  std::string get_value();
+  Token_type get_type() const;
+  std::string get_value() const;
 
-  std::string to_string();
+  std::string to_string() const;
   static std::string type_to_string(Token_type type);
+
+	bool operator==(const Token&) const;
 
 private:
   Token_type type;
@@ -90,13 +92,21 @@ class AST {
 public:
 	AST();
   AST(AST_type);
-	AST(AST_type, std::string value);
+	AST(AST_type, std::string);
 
 	void add_child(AST);
 
-	AST at(int);
-	AST_type get_type();
-	std::string get_value();
+	AST at(int) const;
+	AST_type get_type() const;
+	std::string get_value() const;
+	std::vector<AST> get_children() const;
+
+	static std::string type_to_string(AST_type);
+
+	std::string single_to_string() const;
+	std::string to_string() const;
+
+	bool operator==(const AST&) const;
 };
 
 // This class converts tokens into an abstract syntax tree

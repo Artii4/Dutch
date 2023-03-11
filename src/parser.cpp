@@ -100,13 +100,13 @@ AST Parser::expression() {
     Token_type t = lookahead.get_type();
     AST new_parent;
 
-    if (t == PLUS) {
+    if (t == PLUS)
       new_parent = {AST_type::PLUS};
-		} else if (t == MINUS) {
+		else if (t == MINUS)
       new_parent = {AST_type::MINUS};
-		} else {
+		else
       break;
-		} 
+
 			
 		consume();
 
