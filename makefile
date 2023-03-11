@@ -1,4 +1,4 @@
-objects = obj/token.o obj/lexer.o
+objects = obj/token.o obj/lexer.o obj/parser.o obj/ast.o
 
 bin/dutch: obj/main.o $(objects)
 	g++ -o bin/dutch obj/main.o $(objects)
@@ -14,6 +14,10 @@ obj/lexer.o: src/lexer.cpp
 	g++ -std=c++11 -c src/lexer.cpp -o obj/lexer.o
 obj/tests.o: tests/tests.cpp
 	g++ -std=c++11 -c tests/tests.cpp -o obj/tests.o
+obj/parser.o: src/parser.cpp
+	g++ -std=c++11 -c src/parser.cpp -o obj/parser.o
+obj/ast.o: src/ast.cpp
+	g++ -std=c++11 -c src/ast.cpp -o obj/ast.o
 
 
 clean:
@@ -21,4 +25,4 @@ clean:
 test: bin/tests
 	./bin/tests
 
-.PHONY: clean
+.PHONY: clean test

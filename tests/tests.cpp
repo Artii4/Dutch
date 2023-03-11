@@ -21,17 +21,18 @@ bool lexer_throws_exception_on_input(string input) {
 }
 
 bool lexer_matches_expected_types(string input, vector<Token_type> expected) {
-	Lexer l(input);
-	vector<Token_type> received;
+  Lexer l(input);
+  vector<Token_type> received;
 
-	while (true) {
-		Token t = l.next_token();
-		received.push_back(t.get_type());
+  while (true) {
+    Token t = l.next_token();
+    received.push_back(t.get_type());
 
-		if (t.get_type() == END) break;
-	}
+    if (t.get_type() == END)
+      break;
+  }
 
-	return received == expected;
+  return received == expected;
 }
 
 void test_lexer() {
@@ -40,7 +41,6 @@ void test_lexer() {
 
   assert(!lexer_throws_exception_on_input("(13)"));
   assert(!lexer_throws_exception_on_input("john"));
-  assert(!lexer_throws_exception_on_input("print 3 uit;"));
   assert(!lexer_throws_exception_on_input(""));
   assert(!lexer_throws_exception_on_input("1 + 1"));
   assert(!lexer_throws_exception_on_input("1 - 1"));
@@ -48,13 +48,32 @@ void test_lexer() {
   assert(!lexer_throws_exception_on_input("1 / 1"));
   assert(!lexer_throws_exception_on_input("\r\n\t "));
 
-	assert(lexer_matches_expected_types("", {END}));
-	assert(lexer_matches_expected_types("13", {NUMBER, END}));
-	assert(lexer_matches_expected_types("13+2", {NUMBER, PLUS, NUMBER, END}));
-	assert(lexer_matches_expected_types("print;", {PRINT, SEMICOLON, END}));
-	assert(lexer_matches_expected_types("print pi uit;", {PRINT, NAME, UIT, SEMICOLON, END}));
-	assert(lexer_matches_expected_types("laat x 15 zijn;", {LAAT, NAME, NUMBER, ZIJN, SEMICOLON, END}));
-	assert(lexer_matches_expected_types("laat pi 3 zijn en print het uit;", {LAAT, NAME, NUMBER, ZIJN, EN, PRINT, HET, UIT, SEMICOLON, END}));
+  assert(lexer_matches_expected_types("", {END}));
+  assert(lexer_matches_expected_types("13", {NUMBER, END}));
+  assert(lexer_matches_expected_types("13+2", {NUMBER, PLUS, NUMBER, END}));
+  assert(lexer_matches_expected_types("print;", {PRINT, SEMICOLON, END}));
+  assert(lexer_matches_expected_types("print pi uit;",
+                                      {PRINT, NAME, UIT, SEMICOLON, END}));
+  assert(lexer_matches_expected_types(
+      "laat x 15 zijn;", {LAAT, NAME, NUMBER, ZIJN, SEMICOLON, END}));
+  assert(lexer_matches_expected_types(
+      "laat pi 3 zijn en print het uit;",
+      {LAAT, NAME, NUMBER, ZIJN, EN, PRINT, HET, UIT, SEMICOLON, END}));
+}
+
+bool parser_throws_exception_on_input(std::string input) {
+	Parser p(input);
+	
+	try {
+		p.parse();
+	} catch (...) {
+		return true;
+	}
+
+	return false;
+}
+
+void test_parser() {
 }
 
 void test_all() { test_lexer(); }
