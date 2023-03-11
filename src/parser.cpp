@@ -27,8 +27,18 @@ Token Parser::expect(Token_type expected) {
   return got;
 }
 
+AST Parser::parse() {
+	AST result = program();
+	expect(END);
+
+	return result;
+}
+
 AST Parser::program() {
 	AST result(AST_type::PROGRAM);
+
+	if (lookahead.get_type() == END)
+		throw std::runtime_error("Empty parser input");
 
 	while (lookahead.get_type() != END)
 		result.add_child(statement());
@@ -46,11 +56,17 @@ AST Parser::statement() {
     throw std::runtime_error("Expected assignment or print, got: " +
                              lookahead.to_string());
 
-  if (lookahead.get_type() != EN && lookahead.get_type() != SEMICOLON)
+	if (lookahead.get_type() == EN) {
+		consume();
+		if (lookahead.get_type() == END)
+			throw std::runtime_error("Expected end of file after 'en'");
+	} else if (lookahead.get_type() == SEMICOLON) {
+		consume();
+	} else {
     throw std::runtime_error("Expected semicolon or 'en', got: " +
-                             lookahead.to_string());
+				lookahead.to_string());
+	}
 
-  consume();
 	return result;
 }
 AST Parser::assignment() {
@@ -77,13 +93,6 @@ AST Parser::print() {
   return result;
 }
 
-AST Parser::parse() {
-	AST result = program();
-	expect(END);
-
-	return result;
-}
-
 AST Parser::expression() {
   AST result = mul();
 
@@ -91,12 +100,15 @@ AST Parser::expression() {
     Token_type t = lookahead.get_type();
     AST new_parent;
 
-    if (t == PLUS)
+    if (t == PLUS) {
       new_parent = {AST_type::PLUS};
-    else if (t == MINUS)
+		} else if (t == MINUS) {
       new_parent = {AST_type::MINUS};
-    else
+		} else {
       break;
+		} 
+			
+		consume();
 
     new_parent.add_child(result);
     new_parent.add_child(mul());
@@ -121,6 +133,8 @@ AST Parser::mul() {
     else
       break;
 
+		consume();
+
     new_parent.add_child(result);
     new_parent.add_child(value());
 
@@ -136,13 +150,21 @@ AST Parser::value() {
   switch (lookahead.get_type()) {
   case NUMBER:
     result = {AST_type::NUMBER, lookahead.get_value()};
+		consume();
+		break;
   case NAME:
     result = {AST_type::NAME, lookahead.get_value()};
+		consume();
+		break;
 	case HET:
 		result = {AST_type::HET};
+		consume();
+		break;
   case LPAREN:
+		consume();
     result = expression();
     expect(RPAREN);
+		break;
   default:
     throw std::runtime_error("Invalid token: " + lookahead.to_string());
   }

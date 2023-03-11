@@ -74,9 +74,31 @@ bool parser_throws_exception_on_input(std::string input) {
 }
 
 void test_parser() {
+	// Invalid input
+	assert(parser_throws_exception_on_input(""));
+	assert(parser_throws_exception_on_input(";"));
+	assert(parser_throws_exception_on_input("2;"));
+	assert(parser_throws_exception_on_input("2+2;"));
+	assert(parser_throws_exception_on_input("print 2 uit"));
+	assert(parser_throws_exception_on_input("print 2 uit en"));
+
+	// Valid input
+	assert(!parser_throws_exception_on_input("print 2 uit;"));
+	assert(!parser_throws_exception_on_input("laat pi 3 zijn;"));
+	assert(!parser_throws_exception_on_input("laat pi 3 zijn en print het uit;"));
+	assert(!parser_throws_exception_on_input("print 2 * 2 uit;"));
+	assert(!parser_throws_exception_on_input("print 2 * (2) uit;"));
+	assert(!parser_throws_exception_on_input("print (2) uit;"));
+	assert(!parser_throws_exception_on_input("print (3 + 3) / 7 uit;"));
+	assert(!parser_throws_exception_on_input("laat pi (3 + 3) zijn;"));
+	assert(!parser_throws_exception_on_input("laat pi 22/7 zijn en laat tau pi*2 zijn en print het uit;"));
+	assert(!parser_throws_exception_on_input("print 7/(200-11) uit;"));
 }
 
-void test_all() { test_lexer(); }
+void test_all() {
+	test_lexer();
+	test_parser();
+}
 
 int main() {
   test_all();
