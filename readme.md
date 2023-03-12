@@ -13,6 +13,8 @@ Dit is natuurlijk niet genoeg. Als laatste heb je het woord "het". Dat is jouw l
 Wij houden van Nederlands.
 
 # Hoe moet ik Dutch installeren?
+Voor dat je de programma compilet, moet je eerste de directories "bin" en "obj" aanmaken.
+
 Typ "make" in je command-line. Je moet een C++ compiler geinstalleerd hebben, zoals gcc of clang.
 
 Als het is gelukt om te compilen, dan zul je een bestand zien in de /bin directory. Dan kun je hem runnen.
