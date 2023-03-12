@@ -43,7 +43,7 @@ Token Lexer::word() {
 
 Token Lexer::number() {
   std::string buf;
-  while (isdigit(lookahead)) {
+  while (isdigit(lookahead) || lookahead == '.') {
     buf += lookahead;
     consume();
   }

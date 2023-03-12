@@ -37,8 +37,8 @@ bool lexer_matches_expected_types(string input, vector<Token_type> expected) {
 
 void test_lexer() {
   assert(lexer_throws_exception_on_input("="));
-  assert(lexer_throws_exception_on_input("13.1"));
 
+  assert(!lexer_throws_exception_on_input("13.1"));
   assert(!lexer_throws_exception_on_input("(13)"));
   assert(!lexer_throws_exception_on_input("john"));
   assert(!lexer_throws_exception_on_input(""));
