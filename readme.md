@@ -11,3 +11,6 @@ Als je houdt van het woord "en" kan je daarmee ook meerdere dingen tegelijkertij
 Dit is natuurlijk niet genoeg. Als laatste heb je het woord "het". Dat is jouw laatst-aangemaakte variabele. Een voorbeeld hiervan is: "laat pi 22/7 en print het uit; laat tau pi \* 2 zijn en laat x pi \* tau zijn en print het uit;". Dutch zal dan x uitprinten.
 
 Wij houden van Nederlands.
+
+# Hoe moet ik Dutch installeren?
+Typ "make" in je command-line. Je moet een C++ compiler geinstalleerd hebben, zoals gcc of clang.
