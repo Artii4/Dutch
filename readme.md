@@ -14,3 +14,5 @@ Wij houden van Nederlands.
 
 # Hoe moet ik Dutch installeren?
 Typ "make" in je command-line. Je moet een C++ compiler geinstalleerd hebben, zoals gcc of clang.
+
+Als het is gelukt om te compilen, dan zul je een bestand zien in de /bin directory. Dan kun je hem runnen.
