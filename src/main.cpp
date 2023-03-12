@@ -22,7 +22,7 @@ int main() {
 		if (output == "") continue;
 
 
-		std::cout << "> " << output;
+		std::cout << output;
 	}
 
 	return 0;
