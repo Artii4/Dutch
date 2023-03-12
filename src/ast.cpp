@@ -5,8 +5,8 @@
 AST::AST() = default;
 
 AST::AST(AST_type type) {
-	this->type = type;
-	this->value = type_to_string(type);
+  this->type = type;
+  this->value = type_to_string(type);
 }
 
 AST::AST(AST_type type, std::string value) {
@@ -49,8 +49,9 @@ std::string AST::type_to_string(AST_type t) {
     return "PRINT";
   case AST_type::PROGRAM:
     return "PROGRAM";
-	default:
-		throw std::runtime_error("Invalid AST type in switch: " + std::to_string((int)t));
+  default:
+    throw std::runtime_error("Invalid AST type in switch: " +
+                             std::to_string((int)t));
   }
 }
 
@@ -59,14 +60,14 @@ std::string AST::single_to_string() const {
 }
 
 std::string AST::to_string() const {
-	std::string buf = "(";
-	buf += single_to_string();
+  std::string buf = "(";
+  buf += single_to_string();
 
-	if (!children.empty())
-		for (auto child : children)
-			buf += child.to_string();
+  if (!children.empty())
+    for (auto child : children)
+      buf += child.to_string();
 
-	buf += ")";
+  buf += ")";
 
-	return buf;
+  return buf;
 }

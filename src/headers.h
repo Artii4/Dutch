@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
 enum Token_type {
   // Operators
@@ -152,21 +152,21 @@ class Interpreter {
 public:
   Interpreter();
 
-	// Interpret the abstract syntax tree and return the output buffer
+  // Interpret the abstract syntax tree and return the output buffer
   std::string interpret(AST);
 
 private:
-	// For binary expressions like plus or minus
-	double calculate(AST);
+  // For binary expressions like plus or minus
+  double calculate(AST);
 
-	// For executes the program
-	void walk(AST);
+  // For executes the program
+  void walk(AST);
 
-	// Execute each type of statement. (print or assignment)
-	void assignment(AST);
-	void print(AST);
+  // Execute each type of statement. (print or assignment)
+  void assignment(AST);
+  void print(AST);
 
   std::string output;
-	std::unordered_map<std::string, double> variables;
-	std::string last_variable_name;
+  std::unordered_map<std::string, double> variables;
+  std::string last_variable_name;
 };

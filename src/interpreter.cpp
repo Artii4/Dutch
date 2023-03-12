@@ -1,9 +1,7 @@
 #include "headers.h"
 #include <iostream>
 
-Interpreter::Interpreter() {
-	last_variable_name = "";
-}
+Interpreter::Interpreter() { last_variable_name = ""; }
 
 // Reset the output for the user, walk the entire tree, and return
 // the new output.
@@ -33,13 +31,13 @@ void Interpreter::walk(AST tree) {
 }
 
 void Interpreter::assignment(AST tree) {
-	last_variable_name = tree.at(0).get_value();
+  last_variable_name = tree.at(0).get_value();
   variables[last_variable_name] = calculate(tree.at(1));
 }
 
 void Interpreter::print(AST tree) {
-	output += std::to_string(calculate(tree.at(0)));
-	output += "\n";
+  output += std::to_string(calculate(tree.at(0)));
+  output += "\n";
 }
 
 double Interpreter::calculate(AST tree) {
@@ -49,8 +47,8 @@ double Interpreter::calculate(AST tree) {
     return std::stod(tree.get_value());
   case AST_type::NAME:
     return variables[tree.get_value()];
-	case AST_type::HET:
-		return variables[last_variable_name];
+  case AST_type::HET:
+    return variables[last_variable_name];
 
     // Binary nodes
   case AST_type::PLUS:
