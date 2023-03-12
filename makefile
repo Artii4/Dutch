@@ -1,4 +1,4 @@
-objects = obj/token.o obj/lexer.o obj/parser.o obj/ast.o
+objects = obj/token.o obj/lexer.o obj/parser.o obj/ast.o obj/interpreter.o
 
 bin/dutch: obj/main.o $(objects)
 	g++ -o bin/dutch obj/main.o $(objects)
@@ -18,6 +18,8 @@ obj/parser.o: src/parser.cpp
 	g++ -g -Wall -std=c++11 -c src/parser.cpp -o obj/parser.o
 obj/ast.o: src/ast.cpp
 	g++ -g -Wall -std=c++11 -c src/ast.cpp -o obj/ast.o
+obj/interpreter.o: src/interpreter.cpp
+	g++ -g -Wall -std=c++11 -c src/interpreter.cpp -o obj/interpreter.o
 
 
 clean:

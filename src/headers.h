@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 enum Token_type {
   // Operators
@@ -40,7 +41,7 @@ public:
   std::string to_string() const;
   static std::string type_to_string(Token_type type);
 
-	bool operator==(const Token&) const;
+  bool operator==(const Token &) const;
 
 private:
   Token_type type;
@@ -75,7 +76,7 @@ enum class AST_type {
 
   NUMBER,
   NAME,
-	HET,
+  HET,
 
   ASSIGNMENT,
   PRINT,
@@ -90,23 +91,23 @@ class AST {
   AST_type type;
 
 public:
-	AST();
+  AST();
   AST(AST_type);
-	AST(AST_type, std::string);
+  AST(AST_type, std::string);
 
-	void add_child(AST);
+  void add_child(AST);
 
-	AST at(int) const;
-	AST_type get_type() const;
-	std::string get_value() const;
-	std::vector<AST> get_children() const;
+  AST at(int) const;
+  AST_type get_type() const;
+  std::string get_value() const;
+  std::vector<AST> get_children() const;
 
-	static std::string type_to_string(AST_type);
+  static std::string type_to_string(AST_type);
 
-	std::string single_to_string() const;
-	std::string to_string() const;
+  std::string single_to_string() const;
+  std::string to_string() const;
 
-	bool operator==(const AST&) const;
+  bool operator==(const AST &) const;
 };
 
 // This class converts tokens into an abstract syntax tree
@@ -119,30 +120,29 @@ public:
   AST parse();
 
 private:
-	// Helper functions
-	void consume();
-	Token expect(Token_type);
+  // Helper functions
+  void consume();
+  Token expect(Token_type);
 
-	// GRAMMAR RULES
+  // GRAMMAR RULES
 
-	// A program is a collection of one or more statements
-	AST program();
-	// A statement is an assignment or print-command
-	AST statement();
+  // A program is a collection of one or more statements
+  AST program();
+  // A statement is an assignment or print-command
+  AST statement();
 
-	// Two possible kinds of statements
-	AST assignment();
-	AST print(); 
+  // Two possible kinds of statements
+  AST assignment();
+  AST print();
 
-	// Expression is mul, mul - expression, or mul + expression
-	AST expression();
+  // Expression is mul, mul - expression, or mul + expression
+  AST expression();
 
-	// Mul is value * mul, value / mul, or simply value
-	AST mul();
+  // Mul is value * mul, value / mul, or simply value
+  AST mul();
 
-	// Name, 'het', or number
-	AST value();
-
+  // Name, 'het', or number
+  AST value();
 
   Token lookahead;
   Lexer input;
@@ -152,9 +152,21 @@ class Interpreter {
 public:
   Interpreter();
 
-  // Interpret the abstract syntax tree and return the output buffer
+	// Interpret the abstract syntax tree and return the output buffer
   std::string interpret(AST);
 
 private:
+	// For binary expressions like plus or minus
+	double calculate(AST);
+
+	// For executes the program
+	void walk(AST);
+
+	// Execute each type of statement. (print or assignment)
+	void assignment(AST);
+	void print(AST);
+
   std::string output;
+	std::unordered_map<std::string, double> variables;
+	std::string last_variable_name;
 };
